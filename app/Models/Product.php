@@ -19,4 +19,14 @@ class Product extends Model
          'stock',
          'value',
         ];
+
+    /*
+    |   El campos id_product
+    |   NO pueden ser llenado por peticiones post de API
+    |   o por medio de fomularios
+    */
+
+    protected $guarded = [
+        'id_product',
+    ];
 }
