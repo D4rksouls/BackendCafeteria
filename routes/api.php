@@ -31,12 +31,12 @@ Route::get('products', function() {
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo GET y el endpoint es products
-|   y se le envia {id_product}, donde este mismo se resive como @param  $id_product de la funcion
-|   en donde se usa magic method 'find' con el @param  $id_product. Que lo que hace es buscar
+|   y se le envia {id}, donde este mismo se resive como @param  $id de la funcion
+|   en donde se usa magic method 'find' con el @param  $id. Que lo que hace es buscar
 |   ese id dentro de los productos.
 */
-Route::get('products/{id_product}', function($id_product) {
-    return Product::find($id_product);
+Route::get('products/{id}', function($id) {
+    return Product::find($id);
 });
 
 /*
@@ -51,24 +51,24 @@ Route::post('products', function(Request $request) {
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo PUT que es products
-|   y se le envia {id_product}, ademas de recibir un "@param Request $Request'. Para luego de ello
+|   y se le envia {id}, ademas de recibir un "@param Request $Request'. Para luego de ello
 |   Buscar el Producto que tiene ese id con 'findOrFail' que en el caso de que no lo encuentre
 |   nos envia un mesaje de error.
 |   Por ultimo en el caso de que si lo encuentre actualiza ese producto con la informacion del Request
 */
-Route::put('products/{id_product}', function(Request $request, $id_product) {
-    $product = Product::findOrFail($id_product);
+Route::put('products/{id}', function(Request $request, $id) {
+    $product = Product::findOrFail($id);
     $product->update($request->all());
     return $product;
 });
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo DELETE que es products
-|   y se le envia {id_product}, que lo que hace es recibir ese @param  $id_product para buscar el producto
+|   y se le envia {id}, que lo que hace es recibir ese @param  $id para buscar el producto
 |   para luego de ello proceder a eliminarlo.
 */
-Route::delete('products/{id_product}', function($id_product) {
-    Product::find($id_product)->delete();
+Route::delete('products/{id}', function($id) {
+    Product::find($id)->delete();
     return 204;
 });
 

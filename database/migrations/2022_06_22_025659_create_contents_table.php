@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-       // if(!(Schema::hasTable('contents'))){
+        if(!(Schema::hasTable('contents'))){
             Schema::create('contents', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('id_invoice')->unsigned();
@@ -22,7 +22,7 @@ return new class extends Migration
                 $table->foreign('id_product')->references('id')->on('products');
                 $table->timestamps();
             });
-       // }
+       }
     }
 
     /**

@@ -136,14 +136,5 @@
                 </div>
             </div>
         </div>
-        <form> <!-- Prueba de como utilizar las rutas para redireccionar a otra pagina-->
-                <ul>
-                    <li><a href ="{{ route('login') }}">login</a></li>
-                    <li><a href ="{{ route('signIn') }}">sign In</a></li>
-                    <li><a href ="{{ route('store') }}">store</a></li>
-                </ul>
-        </form>
-
-
     </body>
 </html>

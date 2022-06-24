@@ -35,6 +35,7 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
+
 // falta Organizar
 Route::get('/signIn', function () {
     return view('signIn');
