@@ -55,7 +55,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response  json(@param $product, @status: 200)
      */
     public function update(Request $request, $id){
 
@@ -71,7 +71,7 @@ class ProductController extends Controller
      * Eliminar el recurso especificado del almacenamiento.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response    json(@param $product = null, @status: 204)
      */
     public function destroy($id){
 
