@@ -8,45 +8,47 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index(){
-
-        $products = DB::table('products')->get();
-
-        return view('store', ['products' => $products]);
-    }
-
     /**
-     * Almacenar un recurso recién creado en el almacén.
+     * Muestra todos los productos
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param string  $name
-     * @param integer $i
-     * @param float $value
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        $product = new Product();
-        $product->name_product = $_POST['name'];
-        $product->stock = $_POST['i'];
-        $product->value = $_POST['value'];
-        $product->save();
+    public function index(){
 
-        echo "Guardando";
-        return redirect()->route('store');
+        return Product::all();
 
     }
 
+
+
     /**
-     * Mostrar el recurso especificado.
+     * Mostrar el producto especificado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id){
+
+        return Product::find($id);
+
     }
+
+
+
+    /**
+     * Almacenar un producto recién.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response  json(@param $product, @status: 201)
+     */
+    public function store(Request $request){
+
+        $product = Product::create($request->all());
+
+        return response()->json($product, 201);
+    }
+
+
 
     /**
      * Actualizar el recurso especificado en el almacén.
@@ -55,10 +57,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+        return response()->json($product, 200);
+
     }
+
+
 
     /**
      * Eliminar el recurso especificado del almacenamiento.
@@ -66,8 +73,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+
+        Product::find($id)->delete();
+        return response()->json(null, 204);
+
     }
 }

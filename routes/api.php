@@ -3,6 +3,7 @@
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 |   toda la lista de los articulos que estan en nuestra base de datos.  (utilizando magic method por
 |   medio de ORM de eloquent)
 */
-Route::get('products', function() {
-    return Product::all();
-});
+Route::get('products', [ProductController::class, 'index']);
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo GET y el endpoint es products
@@ -35,9 +34,7 @@ Route::get('products', function() {
 |   en donde se usa magic method 'find' con el @param  $id. Que lo que hace es buscar
 |   ese id dentro de los productos.
 */
-Route::get('products/{id}', function($id) {
-    return Product::find($id);
-});
+Route::get('products/{id}', [ProductController::class, 'show']);
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo POST que es products.
@@ -45,9 +42,7 @@ Route::get('products/{id}', function($id) {
 |   va a recibir un "@param Request $Request' y va crear un producto con la informacion
 |   del Request
 */
-Route::post('products', function(Request $request) {
-    return Product::create($request->all());
-});
+Route::post('products', [ProductController::class, 'store']);
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo PUT que es products
@@ -56,19 +51,12 @@ Route::post('products', function(Request $request) {
 |   nos envia un mesaje de error.
 |   Por ultimo en el caso de que si lo encuentre actualiza ese producto con la informacion del Request
 */
-Route::put('products/{id}', function(Request $request, $id) {
-    $product = Product::findOrFail($id);
-    $product->update($request->all());
-    return $product;
-});
+Route::put('products/{id}', [ProductController::class, 'update']);
 
 /*
 |   Existe un endpoint que es accesible por medio del metodo DELETE que es products
 |   y se le envia {id}, que lo que hace es recibir ese @param  $id para buscar el producto
 |   para luego de ello proceder a eliminarlo.
 */
-Route::delete('products/{id}', function($id) {
-    Product::find($id)->delete();
-    return 204;
-});
+Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
