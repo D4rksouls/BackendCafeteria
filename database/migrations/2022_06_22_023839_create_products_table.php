@@ -15,7 +15,7 @@ return new class extends Migration
     {
         if(!(Schema::hasTable('products'))) {
             Schema::create('products', function (Blueprint $table) {
-                $table->increments('id_product');
+                $table->increments('id');
                 $table->string('name_product');
                 $table->integer('stock');
                 $table->float('value');

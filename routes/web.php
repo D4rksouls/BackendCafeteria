@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-
+/*
 // falta Organizar
 Route::get('/login', function () {
     return view('login');
@@ -48,7 +48,7 @@ Route::get('/AdminUsers', function () {
 // falta Organizar
 Route::get('/store', [ProductController::class, 'index'])->name('store');
 
-Route::post('/store', [ProductController::class, 'create'])->name('save');
+Route::post('/', [ProductController::class, 'create'])->name('save');
 
 // falta Organizar
 Route::get('/profile', function () {
@@ -59,4 +59,4 @@ Route::get('/profile', function () {
 Route::get('/stock', function () {
     return view('stock');
 })->name('stock');
-
+*/

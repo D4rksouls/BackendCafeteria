@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        if(!(Schema::hasTable('contents'))){
+       // if(!(Schema::hasTable('contents'))){
             Schema::create('contents', function (Blueprint $table) {
-                $table->increments('id_process');
+                $table->increments('id');
                 $table->integer('id_invoice')->unsigned();
                 $table->foreign('id_invoice')->references('id')->on('invoices');
                 $table->integer('id_product')->unsigned();
-                $table->foreign('id_product')->references('id_product')->on('products');
+                $table->foreign('id_product')->references('id')->on('products');
                 $table->timestamps();
             });
-        }
+       // }
     }
 
     /**
