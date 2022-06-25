@@ -4,7 +4,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,3 +60,14 @@ Route::put('products/{id}', [ProductController::class, 'update']);
 */
 Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
+Route::post('register', [UserController::class,'register']);
+Route::post('login', [UserController::class,'authenticate']);
+
+//middleware de autentificacion
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+
+Route::get('user', [UserController::class,'getAuthenticatedUser']);
+Route::post('user', [UserController::class,'logout']);
+
+});
