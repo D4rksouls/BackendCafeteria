@@ -61,13 +61,15 @@ Route::put('products/{id}', [ProductController::class, 'update']);
 Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
 Route::post('register', [UserController::class,'register']);
-Route::post('login', [UserController::class,'authenticate']);
+Route::post('login', [UserController::class,'login']);
 
 //middleware de autentificacion
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
-Route::get('user', [UserController::class,'getAuthenticatedUser']);
-Route::post('user', [UserController::class,'logout']);
+Route::get('profile', [UserController::class,'getUser']);
+Route::post('profile/update', [UserController::class,'update']);
+Route::post('profile/{id}', [UserController::class,'delete']);
+Route::post('profile', [UserController::class,'logout']);
 
 });

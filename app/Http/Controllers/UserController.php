@@ -9,11 +9,20 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
 {
-    public function authenticate(Request $request){
+    /**
+    * @param  \Illuminate\Http\Request  $request
+    * @param $credentials para luego validarse si en la base hay un usuario que cumpla con esas credenciales
+    *        Si se logra autentificar nos devuelte el token
+    *        Si no, devuelve el estatus
+    *
+    * @return Response  json(token) o status
+    */
+    public function login(Request $request){
 
     $credentials = $request->only('email', 'password');
     try {
@@ -31,6 +40,14 @@ class UserController extends Controller
     return response()->json(compact('token'));
     }
 
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * Process     @param $validator =Validator::make($request->all()  Valida que los datos recibidos si cumplan  // si la validacion falla devuelve un 400
+     * Process     @param $user = User::create  Crea el Usuario y encripta la Password con el Hash
+     * Process     @param $token = JWTAuth::fromUser($user); Obtenemos el token correspondiente a ese usuario creado
+     *
+     * @return Response json(compact('user','token'),201)
+     */
 
     public function register(Request $request){
 
@@ -60,8 +77,15 @@ class UserController extends Controller
 
     }
 
-
-    public function getAuthenticatedUser(){
+    /**
+     * @param User $user
+     *  Process trata de validar el token del usuario. si este no lo encuentra da json(['user_not_found'], 404) o
+     *      nos devuelve el error correspondiente
+     *  En el caso de que si logre autenticarlo devuelve el usuario
+     *
+     * @return Response json(compact('user'))
+     */
+    public function getUser(){
 
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
@@ -88,13 +112,79 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Invalida el token JWT del usuario para finalizar la sesion
+     * En el caso de que salga error se le indica al usuario try again
+     *
+     * @return response ->json();
+     */
     public function logout(){
 
-            Auth::logout();
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json([
+              'status' => 'success',
+              'message' => 'You have successfully logged out.'
+            ]);
+        } catch (JWTException $e) {
+              JWTAuth::unsetToken();
+              // algo salió mal tratando de validar un token inválido
                 return response()->json([
-                    'status' => 'success',
-                    'message' => 'Successfully logged out',
-             ]);
+                    'status' => 'error',
+                    'message' => 'Failed to logout, please try again.'
+                ]);
+            }
     }
 
+    /**
+     * Eliminar Usuario
+     *
+     * @param $id
+     * @return void response()->json([])
+     */
+    public function delete($id){
+        User::destroy($id);
+
+        return response()->json(['status' => 'User successfully removed']);
+    }
+
+    /**
+     * Recibe el request y segun los datos de este actualiza el usuario
+     *
+     *
+     * @param Resquest $request
+     * @return void response()->json([])
+     */
+
+    public function update(Request $request){
+        $user = Auth::user();
+
+        if ( ! $request->get('document') == ''){
+
+            $user->document = $request->get('document');
+
+        }
+
+        if ( ! $request->get('name') == ''){
+
+            $user->name = $request->get('name');
+
+        }
+
+        if ( ! $request->get('email') == ''){
+
+        $user->email = $request->get('email');
+
+        }
+
+        if ( ! $request->get('password') == ''){
+
+            $user->password = Hash::make($request->get('password'));
+
+        }
+
+        $user->save();
+
+        return response()->json(['status' => 'User successfully updated']);
+    }
 }
