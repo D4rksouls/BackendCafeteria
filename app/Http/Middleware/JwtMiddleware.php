@@ -13,7 +13,7 @@ use Exception;
 class JwtMiddleware
 {
     /**
-     * Handle an incoming request.
+     * Trata de autentificar el token si sea valido
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next

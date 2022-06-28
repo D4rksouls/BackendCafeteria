@@ -64,7 +64,7 @@ Route::post('login', [UserController::class,'login']);
 
 //middleware de autentificacion
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify','assign.guard:users']], function() {
 
     Route::get('profile', [UserController::class,'getUser']);
     Route::post('profile/update', [UserController::class,'update']);
@@ -74,3 +74,4 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 });
 
 //falta implemetar multi-user en la rutas para probarlo
+Route::post('login', [AdminController::class,'login']);

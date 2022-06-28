@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class AssignGuard
 {
     /**
+     *  Valida el el guard no sea nulo y asigna el guard
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
