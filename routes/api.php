@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -67,9 +66,11 @@ Route::post('login', [UserController::class,'login']);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
-Route::get('profile', [UserController::class,'getUser']);
-Route::post('profile/update', [UserController::class,'update']);
-Route::post('profile/{id}', [UserController::class,'delete']);
-Route::post('profile', [UserController::class,'logout']);
+    Route::get('profile', [UserController::class,'getUser']);
+    Route::post('profile/update', [UserController::class,'update']);
+    Route::post('profile/{id}', [UserController::class,'delete']);
+    Route::post('profile', [UserController::class,'logout']);
 
 });
+
+//falta implemetar multi-user en la rutas para probarlo
