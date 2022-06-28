@@ -196,9 +196,14 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-        *  JWT
+        *  Library JWT
         */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+        /*
+         *  Library Spatie
+         */
+        Spatie\Permission\PermissionServiceProvider::class
 
     ],
 

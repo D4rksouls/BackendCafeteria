@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+
+        $this->middleware('can:user')->only('getUser');
+        $this->middleware('can:updateUser')->only('update');
+        $this->middleware('can:deleteUser')->only('delete');
+        $this->middleware('can:logoutUser')->only('logout');
+        $this->middleware('can:showAllUser')->only('index');
+    }
     /**
     * @param  \Illuminate\Http\Request  $request
     * @param $credentials para luego validarse si en la base hay un usuario que cumpla con esas credenciales
@@ -69,7 +78,7 @@ class UserController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-        ]);
+        ])->assignRole('custumer');
 
         $token = JWTAuth::fromUser($user);
 
@@ -186,5 +195,16 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(['status' => 'User successfully updated']);
+
+    }
+    /**
+    * Muestra todos los Usuarios
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function index(){
+
+        return User::all();
+
     }
 }

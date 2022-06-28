@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('can:DeleteProduct')->only('destroy');
+        $this->middleware('can:updateProduct')->only('update');
+        $this->middleware('can:createProduct')->only('store');
+        $this->middleware('can:searchOneProduct')->only('show');
+        $this->middleware('can:showAllProducts')->only('index');
+    }
     /**
      * Muestra todos los productos
      *

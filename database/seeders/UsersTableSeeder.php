@@ -22,13 +22,28 @@ class UsersTableSeeder extends Seeder
 
         $password = Hash::make('12345678');
 
+    User::create([
+        'document' => 1000635364,
+        'name' => 'Administrador',
+        'email' => 'Admin'.'@cafeteria.com',
+        'password' => $password
+    ])->assignRole('admin');
+
+
+    User::create([
+        'document' => 1037628654,
+        'name' => 'Seller',
+        'email' => 'Seller'.'@cafeteria.com',
+        'password' => $password
+    ])->assignRole('seller');
+/*
         DB::table('users')->insert([
             'document' => 10056342,
             'name' => 'Administrador',
             'email' => 'Admin'.'@gmail.com',
             'password' => $password,
         ]);
-
+*/
         $faker = \Faker\Factory::create();
 
         for($i = 0 ; $i < 5 ; $i++ ){
@@ -37,7 +52,7 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => $password,
-            ]);
+            ])->assignRole('custumer');
         }
     }
 }
