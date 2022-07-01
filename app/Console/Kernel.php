@@ -13,9 +13,17 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected function scheduleTimezone(){
+
+        return 'America/Bogota';    // Para que se ejecute el Cron con la zona horaria indicada
+
+    }
+
+
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('NumberOfStocks:send')->everyMinute(); //->everyFiveMinutes(); ->hourly();
     }
 
     /**
