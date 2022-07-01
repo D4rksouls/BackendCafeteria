@@ -25,6 +25,7 @@ class RoleSedder extends Seeder
 
                            //nombre de la ruta API
         Permission::create(['name' => 'showAllUser'])->assignRole($admin);
+        Permission::create(['name' => 'updateRole'])->assignRole($admin);
 
         Permission::create(['name' => 'user'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'updateUser'])->syncRoles([$admin, $seller, $custumer]);

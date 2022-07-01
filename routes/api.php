@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\PermissionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -67,8 +69,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 
-Route::post('register', [UserController::class,'register']);
-Route::post('login', [UserController::class,'login']);
+Route::post('register', [SessionController::class,'register']);
+Route::post('login', [SessionController::class,'login']);
 
 //middleware de autentificacion
 
@@ -77,7 +79,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 Route::get('profile', [UserController::class,'getUser'])->name('user');
 Route::post('profile/update', [UserController::class,'update'])->name('updateUser');
 Route::post('profile/{id}', [UserController::class,'delete'])->name('deleteUser');
-Route::post('profile', [UserController::class,'logout'])->name('logoutUser');
+Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
 
 Route::get('users', [UserController::class, 'index'])->name('showAllUser');
 
@@ -87,4 +89,5 @@ Route::post('products', [ProductController::class, 'store'])->name('createProduc
 Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
 Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
+Route::post('users/update/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
 });
