@@ -7,23 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class StockMailable extends Mailable
+class EmailMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = 'Stock insuficiente . $variable';
+    public $subject = "Stock insuficiente";
 
-    public $product;
-    public $stock;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($product,$stock)
+    public function __construct()
     {
-        $this->product = $product;
-        $this->stock = $stock;
+        //
     }
 
     /**
@@ -33,6 +30,6 @@ class StockMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('email.stock');
+        return $this->view('emails.stock');
     }
 }

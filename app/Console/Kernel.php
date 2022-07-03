@@ -5,25 +5,25 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use app\Console\Commands\EmailCron;
+
 class Kernel extends ConsoleKernel
 {
+
+    protected $commands = [
+        EmailCron::class,
+    ];
+
+
     /**
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function scheduleTimezone(){
-
-        return 'America/Bogota';    // Para que se ejecute el Cron con la zona horaria indicada
-
-    }
-
-
-
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('NumberOfStocks:send')->everyMinute(); //->everyFiveMinutes(); ->hourly();
+        $schedule->command('email:cron')->everyMinute();
     }
 
     /**
