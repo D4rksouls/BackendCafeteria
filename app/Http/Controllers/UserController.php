@@ -81,10 +81,10 @@ class UserController extends Controller
 
     public function update(Request $request){
         $validator = Validator::make($request->all(), [
-            'document'=>'integer|min:10',
-            'name' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users',
-            'password' => 'string|min:6|confirmed',
+            'document'=> 'nullable|integer|digits_between:6,10',
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'password' => 'nullable|min:8|string|confirmed',
         ]);
 
             if($validator->fails()){
