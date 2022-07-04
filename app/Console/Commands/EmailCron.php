@@ -43,7 +43,7 @@ class EmailCron extends Command
 
         foreach ($products as $product) {
 
-            if($product->stock <= 10){
+            if($product->stock <= 9){
 
                 foreach ($users as $user) {
 
