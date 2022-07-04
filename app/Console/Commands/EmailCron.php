@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailMailable;
 
+use App\Models\User;
+use App\Models\Product;
+
 class EmailCron extends Command
 {
     /**
@@ -35,8 +38,21 @@ class EmailCron extends Command
      */
     public function handle()
     {
-        $correo = new EmailMailable;
-        Mail::to('dsada@gmail.com')->send($correo);
+        $products =  Product::all();
+        $users = User::role(['admin', 'seller'])->get();
+
+        foreach ($products as $product) {
+
+            if($product->stock <= 10){
+
+                foreach ($users as $user) {
+
+                    Mail::to($user->email)->send(new EmailMailable($product));
+
+                }
+
+            }
+        }
 
         Log::info("cron ejecutandose");
        // return 0;

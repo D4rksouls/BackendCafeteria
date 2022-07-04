@@ -7,20 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EmailMailable extends Mailable
+class EmailMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Stock insuficiente";
+    public $subject = "Insufficient stock";
+    public $product;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($product)
     {
-        //
+        $this->product = $product;
     }
 
     /**
