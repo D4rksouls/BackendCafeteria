@@ -14,7 +14,8 @@ class Invoice extends Model
     |   NO pueden ser llenado por peticiones post de API
     |   o por medio de fomularios
     */
-    protected $guarded =[
+    protected $fillable =[
+        'id_client',
         'all_value',
         ];
 }
