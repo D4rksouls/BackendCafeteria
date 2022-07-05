@@ -46,5 +46,7 @@ class RoleSedder extends Seeder
 
         Permission::create(['name' => 'createInvoices'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'addContent'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'buyInvoices'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'showInvoices'])->syncRoles([$admin, $seller, $custumer]);
     }
 }

@@ -99,6 +99,10 @@ Route::post('users/update/{id}',[PermissionController::class, 'updaterole'])->na
 
 Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
 
+Route::post('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
+
+Route::get('store/show',[ContentController::class, 'show'])->name('showInvoices');
+
 Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
 
 });
