@@ -20,6 +20,8 @@ return new class extends Migration
                 $table->foreign('id_invoice')->references('id')->on('invoices');
                 $table->integer('id_product')->unsigned();
                 $table->foreign('id_product')->references('id')->on('products');
+                $table->integer('stock');
+                $table->float('value');
                 $table->timestamps();
             });
        }

@@ -3,10 +3,13 @@
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ContentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -69,6 +72,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 
+
 Route::post('register', [SessionController::class,'register']);
 Route::post('login', [SessionController::class,'login']);
 
@@ -89,5 +93,14 @@ Route::post('products', [ProductController::class, 'store'])->name('createProduc
 Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
 Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
+
 Route::post('users/update/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
+
+
+Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
+
+Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
+
 });
+
+
