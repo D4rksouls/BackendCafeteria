@@ -29,9 +29,9 @@ class RoleSedder extends Seeder
 
         Permission::create(['name' => 'user'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'updateUser'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'deleteAdmiUser'])->assignRole($admin);
+        Permission::create(['name' => 'deleteAdminUser'])->assignRole($admin);
         Permission::create(['name' => 'deleteMyUser'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'updateAdmiUser'])->assignRole($admin);
+        Permission::create(['name' => 'updateAdminUser'])->assignRole($admin);
         Permission::create(['name' => 'logoutUser'])->syncRoles([$admin, $seller, $custumer]);
 
         Permission::create(['name' => 'showAllProducts'])->syncRoles([$admin, $seller, $custumer]);

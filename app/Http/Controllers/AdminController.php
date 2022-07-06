@@ -13,12 +13,12 @@ class AdminController extends Controller
 
     public function __construct(){
 
-        $this->middleware('can:deleteAdmiUser')->only('deleteAdmi');
-        $this->middleware('can:updateAdmiUser')->only('updateAdmi');
+        $this->middleware('can:deleteAdminUser')->only('deleteAdmin');
+        $this->middleware('can:updateAdminUser')->only('updateAdmin');
     }
 
 
-    public function deleteAdmi($id){
+    public function deleteAdmin($id){
         if(! User::find($id)){
             return response()->json(["message" => "User does not exist"],400);
         }

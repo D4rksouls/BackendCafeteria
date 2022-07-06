@@ -87,8 +87,8 @@ Route::get('profile', [UserController::class,'getUser'])->name('user');
 Route::post('profile/update', [UserController::class,'update'])->name('updateUser');
 Route::post('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
 
-Route::post('profile/update/{id}', [AdminController::class,'updateAdmi'])->name('updateAdmiUser');
-Route::post('profile/{id}', [AdminController::class,'deleteAdmi'])->name('deleteAdmiUser');
+Route::post('profile/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
+Route::post('profile/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
 
 
 
