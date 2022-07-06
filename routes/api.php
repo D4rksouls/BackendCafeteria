@@ -90,10 +90,7 @@ Route::post('profile/delete', [UserController::class,'delete'])->name('deleteMyU
 Route::post('profile/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
 Route::post('profile/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
 
-
-
 Route::get('users', [UserController::class, 'index'])->name('showAllUser');
-
 
 Route::post('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
 Route::post('products', [ProductController::class, 'create'])->name('createProduct');
@@ -101,9 +98,7 @@ Route::post('products/{id}', [ProductController::class, 'destroy'])->name('Delet
 Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
 Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
-
 Route::post('users/update/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
-
 
 Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
 Route::post('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
