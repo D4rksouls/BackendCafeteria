@@ -41,6 +41,11 @@ class AdminController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
 
             }
+
+            if(! User::find($id)){
+                return response()->json(["message" => "User does not exist"],400);
+            }
+
         $user = User::find($id);
 
         if ( ! $request->get('document') == ''){

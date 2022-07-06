@@ -60,7 +60,7 @@ class SessionController extends Controller
             'document'=>'required|integer|min:10',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
             if($validator->fails()){
@@ -96,14 +96,14 @@ class SessionController extends Controller
             return response()->json([
               'status' => 'success',
               'message' => 'You have successfully logged out.'
-            ]);
+            ],200);
         } catch (JWTException $e) {
               JWTAuth::unsetToken();
-              // algo salió mal tratando de validar un token inválido
+              // algo salió mal
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Failed to logout, please try again.'
-                ]);
+                ],500);
             }
     }
 }

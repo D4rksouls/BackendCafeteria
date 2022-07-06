@@ -97,7 +97,11 @@ class ProductController extends Controller
 
             }
 
-        $product = Product::findOrFail($id);
+            if(! Product::find($id)){
+                return response()->json(["message" => "Product does not exist"],400);
+            }
+
+        $product = Product::find($id);
         $product->update($request->all());
         return response()->json($product, 200);
 
@@ -118,7 +122,7 @@ class ProductController extends Controller
         }
 
         Product::find($id)->delete();
-        return response()->json(null, 204);
+        return response()->json(["message" => "product successfully disposed"]);
 
     }
 }
