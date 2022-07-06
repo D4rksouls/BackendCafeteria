@@ -21,7 +21,7 @@ class InvoiceController extends Controller
 
     }
 
-    public function Factura(Request $request){
+    public function Factura(){
 
         $id = Auth::id();
 
@@ -42,12 +42,19 @@ class InvoiceController extends Controller
         }
 
         $contents = DB::select('select id_product, stock  from contents where id_invoice = :id', ['id' => $invoiceid]);
-
+        $values = DB::select('select sum(value) as allvalue  from contents where id_invoice = :id', ['id' => $invoiceid]);
 
         foreach($contents as $content){
             $product = Product::find($content->id_product);
             $product->stock = $product->stock - $content->stock;
             $product->save();
+        }
+
+        //var_dump($values);
+        foreach($values as $value){
+            $invoices = Invoice::find($invoiceid);
+            $invoices->all_value = $value->allvalue;
+            $invoices->save();
         }
         return response()->json(["message" => "Congratulations on your purchase"]);
     }

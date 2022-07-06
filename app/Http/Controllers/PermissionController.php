@@ -36,6 +36,8 @@ class PermissionController extends Controller
         }else if($valor == "custumer"){
 
             $user->syncRoles(['custumer']);
+        }else{
+            return response()->json(["message" => "Invalid value entered"],400);
         }
 
         $user->save();

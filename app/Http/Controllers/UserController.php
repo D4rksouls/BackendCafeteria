@@ -19,8 +19,8 @@ class UserController extends Controller
 
         $this->middleware('can:user')->only('getUser');
         $this->middleware('can:updateUser')->only('update');
-        $this->middleware('can:deleteUser')->only('delete');
         $this->middleware('can:showAllUser')->only('index');
+        $this->middleware('can:deleteMyUser')->only('delete');
     }
 
 
@@ -65,11 +65,15 @@ class UserController extends Controller
      * @param $id
      * @return void response()->json([])
      */
-    public function delete($id){
+
+    public function delete(){
+        $id = Auth::id();
+
         User::destroy($id);
 
         return response()->json(['status' => 'User successfully removed']);
     }
+
 
     /**
      * Recibe el request y segun los datos de este actualiza el usuario
