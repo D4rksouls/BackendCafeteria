@@ -21,7 +21,7 @@ class RoleSedder extends Seeder
         $custumer = Role::create(['name' => 'custumer']); // Rol de Admin
 
                            //nombre de la ruta web
-        Permission::create(['name' => 'dashboard'])->syncRoles([$admin, $seller, $custumer]);
+       // Permission::create(['name' => 'dashboard'])->syncRoles([$admin, $seller, $custumer]);
 
                            //nombre de la ruta API
         Permission::create(['name' => 'showAllUser'])->assignRole($admin);
@@ -29,13 +29,10 @@ class RoleSedder extends Seeder
 
         Permission::create(['name' => 'user'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'updateUser'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'deleteUser'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'deleteAdmiUser'])->assignRole($admin);
+        Permission::create(['name' => 'deleteMyUser'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'updateAdmiUser'])->assignRole($admin);
         Permission::create(['name' => 'logoutUser'])->syncRoles([$admin, $seller, $custumer]);
-
-        Permission::create(['name' => 'store'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'store.search'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'store.pay'])->syncRoles([$admin, $seller, $custumer]);
-
 
         Permission::create(['name' => 'showAllProducts'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'searchOneProduct'])->syncRoles([$admin, $seller]);
@@ -47,6 +44,7 @@ class RoleSedder extends Seeder
         Permission::create(['name' => 'createInvoices'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'addContent'])->syncRoles([$admin, $seller, $custumer]);
         Permission::create(['name' => 'buyInvoices'])->syncRoles([$admin, $seller, $custumer]);
-        Permission::create(['name' => 'showInvoices'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'showContent'])->syncRoles([$admin, $seller, $custumer]);
+        Permission::create(['name' => 'destroyContent'])->syncRoles([$admin, $seller, $custumer]);
     }
 }

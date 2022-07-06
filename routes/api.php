@@ -10,6 +10,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -80,16 +81,23 @@ Route::post('login', [SessionController::class,'login']);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
+
+Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
 Route::get('profile', [UserController::class,'getUser'])->name('user');
 Route::post('profile/update', [UserController::class,'update'])->name('updateUser');
-Route::post('profile/{id}', [UserController::class,'delete'])->name('deleteUser');
-Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
+Route::post('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
+
+Route::post('profile/update/{id}', [AdminController::class,'updateAdmi'])->name('updateAdmiUser');
+Route::post('profile/{id}', [AdminController::class,'deleteAdmi'])->name('deleteAdmiUser');
+
+
 
 Route::get('users', [UserController::class, 'index'])->name('showAllUser');
 
-Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
+
 Route::post('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
-Route::post('products', [ProductController::class, 'store'])->name('createProduct');
+Route::post('products', [ProductController::class, 'create'])->name('createProduct');
+Route::post('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
 Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
 Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
@@ -98,12 +106,11 @@ Route::post('users/update/{id}',[PermissionController::class, 'updaterole'])->na
 
 
 Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
-
 Route::post('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-Route::get('store/show',[ContentController::class, 'show'])->name('showInvoices');
-
+Route::get('store/show',[ContentController::class, 'show'])->name('showContent');
 Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
+Route::post('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
 });
 
