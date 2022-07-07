@@ -30,7 +30,7 @@ class InvoiceController extends Controller
                 'all_value' => '',
             ]);
 
-        //return response()->json(compact('id'));
+        return response()->json(["status"=>"invoice created correctly"],201);
     }
 
     public function Buy(){

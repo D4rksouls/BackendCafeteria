@@ -92,7 +92,7 @@ class ContentController extends Controller{
         }
 
         Content::find($id)->delete();
-        return response()->json(null, 204);
+        return response()->json(["message" => "Content successfully disposed"]);
 
     }
 }
