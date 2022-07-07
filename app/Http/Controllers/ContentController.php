@@ -19,6 +19,10 @@ class ContentController extends Controller{
         $this->middleware('can:destroyContent')->only('destroy');
     }
 
+    /**
+     * Añade los productos al carrito
+     *
+     */
     public function Add($productid, Request $request){
         $validator = Validator::make($request->all(), [
             'stock' => 'required|integer',
@@ -59,6 +63,11 @@ class ContentController extends Controller{
 
     }
 
+    /**
+     * Muerstra los productos que hay en el carrito
+     *
+     *
+     */
     public function show(){
         $id = Auth::id();
         $sum = 0.00;
@@ -69,7 +78,7 @@ class ContentController extends Controller{
         }
 
         $contents = DB::select('select id_product, stock, value  from contents where id_invoice = :id', ['id' => $invoiceid]);
-            //echo "    Producto      |stock|  valor unidad   | valor total \n";
+
 
             foreach ($contents as $content) {
             $product = Product::find($content->id_product);
@@ -77,14 +86,18 @@ class ContentController extends Controller{
             $name = $product->name_product;
 
             echo response()->json(compact('name','content'));
-            //echo $product->name_product. " | ". $content->stock. " | ".$product->value. " | ".$content->value ."\n";
+
         }
             return response()->json(compact('sum'));
-        //var_dump( $sum, $id, $invoices, $invoiceid, $contents);
-       // return response()->json(compact('','content', 'sum'));
+
 
     }
 
+    /**
+     * Elimina contenido del carrito
+     *
+     *
+     */
     public function destroy($id){
 
         if(!Content::find($id)){

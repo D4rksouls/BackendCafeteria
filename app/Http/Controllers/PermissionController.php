@@ -14,7 +14,7 @@ class PermissionController extends Controller
         $this->middleware('can:updateRole')->only('roleUpdate');
     }
     /**
-     * Handle the incoming request.
+     * Actualizacion del rol de usuario
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

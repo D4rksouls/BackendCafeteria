@@ -99,7 +99,7 @@ class SessionController extends Controller
             ],200);
         } catch (JWTException $e) {
               JWTAuth::unsetToken();
-              // algo salió mal
+
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Failed to logout, please try again.'

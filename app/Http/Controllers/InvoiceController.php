@@ -20,7 +20,12 @@ class InvoiceController extends Controller
         $this->middleware('can:buyInvoices')->only('Buy');
 
     }
-
+/**
+ *
+ * Crea la factura para poder añadir los productos
+ *
+ *
+ */
     public function Factura(){
 
         $id = Auth::id();
@@ -32,7 +37,11 @@ class InvoiceController extends Controller
 
         return response()->json(["status"=>"invoice created correctly"],201);
     }
-
+/**
+ * Le resta el stock que el cliente se llevo dentro de la base de datos y
+ * actualiza el valor total de la factura
+ *
+ */
     public function Buy(){
         $id = Auth::id();
         $invoices = DB::select('select max(id) AS id from invoices where id_client = :id limit 1', ['id' => $id]);

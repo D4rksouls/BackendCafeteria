@@ -24,14 +24,7 @@ class UserController extends Controller
     }
 
 
-    /**
-     * @param User $user
-     *  Process trata de validar el token del usuario. si este no lo encuentra da json(['user_not_found'], 404) o
-     *      nos devuelve el error correspondiente
-     *  En el caso de que si logre autenticarlo devuelve el usuario
-     *
-     * @return Response json(compact('user'))
-     */
+
     public function getUser(){
 
 
@@ -41,12 +34,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Eliminar Usuario
-     *
-     * @param $id
-     * @return void response()->json([])
-     */
 
     public function delete(){
         $id = Auth::id();
@@ -57,13 +44,6 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Recibe el request y segun los datos de este actualiza el usuario
-     *
-     *
-     * @param Resquest $request
-     * @return void response()->json([])
-     */
 
     public function update(Request $request){
         $validator = Validator::make($request->all(), [
