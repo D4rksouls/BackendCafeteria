@@ -16,8 +16,8 @@ return new class extends Migration
         if(!(Schema::hasTable('personal_access_tokens'))) {
             Schema::create('personal_access_tokens', function (Blueprint $table) {
                 $table->id();
-                $table->morphs('tokenable');
-                $table->string('name');
+                $table->morphs('tokenable', 100);
+                $table->string('name', 100);
                 $table->string('token', 64)->unique();
                 $table->text('abilities')->nullable();
                 $table->timestamp('last_used_at')->nullable();
