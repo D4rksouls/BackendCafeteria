@@ -16,10 +16,14 @@ return new class extends Migration
         if(!(Schema::hasTable('contents'))){
             Schema::create('contents', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('id_invoice')->unsigned();
-                $table->foreign('id_invoice')->references('id')->on('invoices');
-                $table->integer('id_product')->unsigned();
-                $table->foreign('id_product')->references('id')->on('products');
+                $table->integer('id_invoice')->unsigned()->nullable();
+                $table->foreign('id_invoice')->references('id')->on('invoices')
+                ->onUpdate('set null')
+                ->onDelete('set null');
+                $table->integer('id_product')->unsigned()->nullable();
+                $table->foreign('id_product')->references('id')->on('products')
+                ->onUpdate('set null')
+                ->onDelete('set null');
                 $table->integer('stock');
                 $table->float('value');
                 $table->timestamps();

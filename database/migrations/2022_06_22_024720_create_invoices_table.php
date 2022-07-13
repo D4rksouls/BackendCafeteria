@@ -16,8 +16,10 @@ return new class extends Migration
         if(!(Schema::hasTable('invoices'))){
             Schema::create('invoices', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('id_client')->unsigned();
-                $table->foreign('id_client')->references('id')->on('users');
+                $table->integer('id_client')->unsigned()->nullable();
+                $table->foreign('id_client')->references('id')->on('users')
+                        ->onUpdate('set null')
+                        ->onDelete('set null');
                 $table->float('all_value');
                 $table->timestamps();
             });

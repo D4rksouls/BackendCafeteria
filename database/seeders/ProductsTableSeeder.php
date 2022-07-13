@@ -20,6 +20,7 @@ class ProductsTableSeeder extends Seeder
             'name_product' => Str::random(10),
             'stock' => rand(1,35),
             'value' => rand(5,100),
+            'selectstock' => 1,
         ]);
     }
 }

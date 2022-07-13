@@ -19,6 +19,7 @@ return new class extends Migration
                 $table->string('name_product');
                 $table->integer('stock');
                 $table->float('value');
+                $table->integer('selectstock');
                 $table->timestamps();
             });
         }
