@@ -18,43 +18,40 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+//middleware de Cors
+Route::group(['middleware' => ['cors']], function(){
 
-Route::post('register', [SessionController::class,'register']);
-Route::post('login', [SessionController::class,'login']);
+        Route::post('register', [SessionController::class,'register']);
+        Route::post('login', [SessionController::class,'login']);
 
-//middleware de autentificacion
+    //middleware de autentificacion
+    Route::group(['middleware' => ['jwt.verify']], function() {
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+        Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
+        Route::get('profile', [UserController::class,'getUser'])->name('user');
+        Route::put('profile/update', [UserController::class,'update'])->name('updateUser');
+        Route::delete('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
 
+        Route::put('users/update/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
 
-Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
-Route::get('profile', [UserController::class,'getUser'])->name('user');
-Route::put('profile/update', [UserController::class,'update'])->name('updateUser');
-Route::delete('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
+        Route::put('users/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
+        Route::delete('users/delete/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
 
-Route::put('users/update/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
+        Route::get('users', [UserController::class, 'index'])->name('showAllUser');
 
-Route::put('users/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
-Route::delete('users/delete/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
+        Route::post('products/store',[InvoiceController::class, 'Factura'])->name('createInvoices');
+        Route::put('products/store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-Route::get('users', [UserController::class, 'index'])->name('showAllUser');
+        Route::get('products/store/show',[ContentController::class, 'show'])->name('showContent');
+        Route::post('products/store/{productid}',[ContentController::class, 'Add'])->name('addContent');
+        Route::delete('products/store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
-Route::post('products/store',[InvoiceController::class, 'Factura'])->name('createInvoices');
-Route::put('products/store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
+        Route::put('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
+        Route::post('products', [ProductController::class, 'create'])->name('createProduct');
+        Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
+        Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
+        Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
-Route::get('products/store/show',[ContentController::class, 'show'])->name('showContent');
-Route::post('products/store/{productid}',[ContentController::class, 'Add'])->name('addContent');
-Route::delete('products/store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
-
-Route::put('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
-Route::post('products', [ProductController::class, 'create'])->name('createProduct');
-Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
-Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
-Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
-
-
-
+    });
 
 });
-
-
