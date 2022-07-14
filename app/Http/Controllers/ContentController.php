@@ -58,7 +58,6 @@ class ContentController extends Controller{
             'value' => $value,
         ]);
 
-        //var_dump( $invoiceid);
         return response()->json(compact('contents'));
 
     }

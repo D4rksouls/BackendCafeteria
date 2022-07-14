@@ -59,7 +59,7 @@ class InvoiceController extends Controller
             $product->save();
         }
 
-        //var_dump($values);
+
         foreach($values as $value){
             $invoices = Invoice::find($invoiceid);
             $invoices->all_value = $value->allvalue;

@@ -9,11 +9,6 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    /*
-    |   Los campos all_value
-    |   NO pueden ser llenado por peticiones post de API
-    |   o por medio de fomularios
-    */
     protected $fillable =[
         'id_client',
         'all_value',
