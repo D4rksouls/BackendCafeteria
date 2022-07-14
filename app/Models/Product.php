@@ -9,14 +9,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    /*
-    |   Los campos name_product, stock, value
-    |   pueden ser llenado por peticiones post de API
-    |   o por medio de fomularios
-    */
     protected $fillable =[
         'name_product',
          'stock',
          'value',
+         'selectstock'
         ];
 }

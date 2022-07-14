@@ -55,6 +55,6 @@ class EmailCron extends Command
         }
 
         Log::info("cron ejecutandose");
-       // return 0;
+
     }
 }
