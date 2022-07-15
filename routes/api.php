@@ -39,12 +39,12 @@ Route::group(['middleware' => ['cors']], function(){
 
         Route::get('users', [UserController::class, 'index'])->name('showAllUser');
 
-        Route::post('products/store',[InvoiceController::class, 'Factura'])->name('createInvoices');
-        Route::put('products/store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
+        Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
+        Route::put('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-        Route::get('products/store/show',[ContentController::class, 'show'])->name('showContent');
-        Route::post('products/store/{productid}',[ContentController::class, 'Add'])->name('addContent');
-        Route::delete('products/store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
+        Route::get('store/show',[ContentController::class, 'show'])->name('showContent');
+        Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
+        Route::delete('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
         Route::put('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
         Route::post('products', [ProductController::class, 'create'])->name('createProduct');
