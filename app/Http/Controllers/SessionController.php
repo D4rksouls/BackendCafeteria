@@ -84,7 +84,7 @@ class SessionController extends Controller
         $response['status'] = 1;
         $response['message'] = 'Usuario registrado correctamente';
         $response['code'] = 200;
-        return response()->json(compact('user','token', 'response'));
+        return response()->json(compact('response'));
 
     }
 
