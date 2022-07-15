@@ -25,7 +25,7 @@ Route::group(['middleware' => ['cors']], function(){
         Route::post('login', [SessionController::class,'login']);
 
     //middleware de autentificacion
-    Route::group(['middleware' => ['jwt.verify']], function() {
+    /* Route::group(['middleware' => ['jwt.verify']], function() { */
 
         Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
         Route::get('profile', [UserController::class,'getUser'])->name('user');
@@ -52,6 +52,6 @@ Route::group(['middleware' => ['cors']], function(){
         Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
         Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
 
-    });
+    /* }); */
 
 });
