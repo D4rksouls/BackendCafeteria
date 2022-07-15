@@ -27,30 +27,30 @@ Route::group(['middleware' => ['cors']], function(){
     //middleware de autentificacion
     Route::group(['middleware' => ['jwt.verify']], function() {
 
-        Route::post('profile', [SessionController::class,'logout'])->name('logoutUser');
-        Route::get('profile', [UserController::class,'getUser'])->name('user');
-        Route::put('profile/update', [UserController::class,'update'])->name('updateUser');
-        Route::delete('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
+        Route::post('profile/logout', [SessionController::class,'logout'])->name('logoutUser');
+        Route::post('profile', [UserController::class,'getUser'])->name('user');
+        Route::post('profile/update', [UserController::class,'update'])->name('updateUser');
+        Route::post('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
 
-        Route::put('users/update/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
+        Route::post('users/update/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
 
-        Route::put('users/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
-        Route::delete('users/delete/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
+        Route::post('users/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
+        Route::post('users/delete/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
 
-        Route::get('users', [UserController::class, 'index'])->name('showAllUser');
+        Route::post('users', [UserController::class, 'index'])->name('showAllUser');
 
         Route::post('store/invoice',[InvoiceController::class, 'Factura'])->name('createInvoices');
-        Route::put('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
+        Route::post('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-        Route::get('store',[ContentController::class, 'show'])->name('showContent');
+        Route::post('store',[ContentController::class, 'show'])->name('showContent');
         Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
-        Route::delete('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
+        Route::post('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
-        Route::put('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
-        Route::post('products', [ProductController::class, 'create'])->name('createProduct');
-        Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
-        Route::get('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
-        Route::get('products', [ProductController::class, 'index'])->name('showAllProducts');
+        Route::post('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
+        Route::post('products/create', [ProductController::class, 'create'])->name('createProduct');
+        Route::post('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
+        Route::post('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
+        Route::post('products', [ProductController::class, 'index'])->name('showAllProducts');
 
     });
 
