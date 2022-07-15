@@ -78,7 +78,10 @@ class SessionController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user','token'),201);
+        $response['status'] = 1;
+        $response['message'] = 'Usuario registrado correctamente';
+        $response['code'] = 200;
+        return response()->json($user,$token, $response);
 
     }
 
