@@ -41,7 +41,10 @@ class SessionController extends Controller
 
                 }
 
-            return response()->json(compact('token'));
+            $response['status'] =  1;
+            $response['code'] = 200;
+            $response['message']='Inicio de sesion exitoso';
+            return response()->json(compact('token','response'));
     }
 
 
