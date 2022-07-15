@@ -39,10 +39,10 @@ Route::group(['middleware' => ['cors']], function(){
 
         Route::get('users', [UserController::class, 'index'])->name('showAllUser');
 
-        Route::post('store',[InvoiceController::class, 'Factura'])->name('createInvoices');
+        Route::post('store/invoice',[InvoiceController::class, 'Factura'])->name('createInvoices');
         Route::put('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-        Route::get('store/show',[ContentController::class, 'show'])->name('showContent');
+        Route::get('store',[ContentController::class, 'show'])->name('showContent');
         Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
         Route::delete('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
