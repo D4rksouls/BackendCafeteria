@@ -36,14 +36,7 @@ class UsersTableSeeder extends Seeder
         'email' => 'Seller'.'@cafeteria.com',
         'password' => $password
     ])->assignRole('seller');
-/*
-        DB::table('users')->insert([
-            'document' => 10056342,
-            'name' => 'Administrador',
-            'email' => 'Admin'.'@gmail.com',
-            'password' => $password,
-        ]);
-*/
+
         $faker = \Faker\Factory::create();
 
         for($i = 0 ; $i < 5 ; $i++ ){

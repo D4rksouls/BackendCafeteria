@@ -68,14 +68,14 @@ class InvoiceController extends Controller
             $product->stock = $product->stock - $content->stock;
             $product->save();
 
-            var_dump($product->stock);
+
         }
 
             $invoices = Invoice::find($invoiceid);
             $invoices->all_value = $value;
             $invoices->save();
 
-            var_dump($invoices->all_value);
+
 
         return response()->json([
             'status' => 1,

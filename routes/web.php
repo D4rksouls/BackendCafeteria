@@ -29,29 +29,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-/*
-// falta Organizar
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
 
-
-// falta Organizar
-Route::get('/signIn', function () {
-    return view('signIn');
-})->name('signIn');
-
-// falta Organizar
-Route::get('/Users', function () { return view('AdminUsers');})->name('users');
-
-// falta Organizar
-Route::get('/store', [ProductController::class, 'index'])->name('store');
-
-Route::post('/', [ProductController::class, 'create'])->name('save');
-
-// falta Organizar
-Route::get('/profile', function () { return view('profile'); })->name('profile');
-
-// falta crear la vista stock
-Route::get('/stock', function () {   return view('stock');  })->name('stock');
-*/

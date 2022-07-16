@@ -21,7 +21,6 @@ class RoleSedder extends Seeder
         $custumer = Role::create(['name' => 'custumer']); // Rol de Admin
 
                            //nombre de la ruta web
-       // Permission::create(['name' => 'dashboard'])->syncRoles([$admin, $seller, $custumer]);
 
                            //nombre de la ruta API
         Permission::create(['name' => 'showAllUser'])->assignRole($admin);
