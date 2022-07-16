@@ -32,19 +32,30 @@ class SessionController extends Controller
             try {
                     if (! $token = JWTAuth::attempt($credentials)) {
 
-                        return response()->json(['error' => 'Credenciales invalidas'], 400);
+                        return response()->json([
+                            'status' => 0,
+                            'message' => 'Credenciales invalidas',
+                            'code' => 400
+                        ]);
 
                     }
                 } catch (JWTException $e) {
 
-                    return response()->json(['error' => 'No se pudo crear el token de acceso'], 500);
+                    return response()->json([
+                        'status' => 0,
+                        'message' => 'No se pudo crear el token de acceso',
+                        'code' => 400
+                    ]);
 
                 }
+                $token = JWTAuth::attempt($credentials);
 
-            $response['status'] =  1;
-            $response['code'] = 200;
-            $response['message']='Inicio de sesion exitoso';
-            return response()->json(compact('token','response'));
+            return response()->json([
+                'data' => $token,
+                'status' => 1,
+                'message' => 'Inicio de sesion exitoso',
+                'code' => 200
+            ]);
     }
 
 
@@ -68,7 +79,11 @@ class SessionController extends Controller
 
             if($validator->fails()){
 
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'El correo ya existe',
+                'code' => 409
+            ]);
 
             }
 
@@ -79,12 +94,12 @@ class SessionController extends Controller
             'password' => Hash::make($request->get('password')),
         ])->assignRole('custumer');
 
-        $token = JWTAuth::fromUser($user);
 
-        $response['status'] = 1;
-        $response['message'] = 'Usuario registrado correctamente';
-        $response['code'] = 200;
-        return response()->json(compact('response'));
+        return response()->json([
+            'status' => 1,
+            'message' => 'Usuario registrado correctamente',
+            'code' => 200
+        ]);
 
     }
 
@@ -101,15 +116,17 @@ class SessionController extends Controller
             JWTAuth::invalidate(JWTAuth::getToken());
             return response()->json([
               'status' => 'success',
-              'message' => 'You have successfully logged out.'
-            ],200);
+              'message' => 'You have successfully logged out.',
+              'code' => 200
+            ]);
         } catch (JWTException $e) {
               JWTAuth::unsetToken();
 
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Failed to logout, please try again.'
-                ],500);
+                    'message' => 'Failed to logout, please try again.',
+                    'code' => 500
+                ]);
             }
     }
 }

@@ -16,6 +16,7 @@ class ProductController extends Controller
         $this->middleware('can:createProduct')->only('create');
         $this->middleware('can:searchOneProduct')->only('show');
         $this->middleware('can:showAllProducts')->only('index');
+        $this->middleware('can:showAllProductsStore')->only('index');
     }
     /**
      * Muestra todos los productos
@@ -39,7 +40,11 @@ class ProductController extends Controller
     public function show($id){
 
         if(! Product::find($id)){
-            return response()->json(["message" => "Product does not exist"],400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'El producto no existe',
+                'code' => 400
+            ]);
         }
 
         return Product::find($id);
@@ -64,7 +69,11 @@ class ProductController extends Controller
 
             if($validator->fails()){
 
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Datos no validos para la creacion del producto',
+                'code' => 400
+            ]);
 
             }
 
@@ -93,12 +102,20 @@ class ProductController extends Controller
 
             if($validator->fails()){
 
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Datos no validos para la actualizacion del producto',
+                'code' => 400
+            ]);
 
             }
 
             if(! Product::find($id)){
-                return response()->json(["message" => "Product does not exist"],400);
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'El producto no existe',
+                    'code' => 400
+                ]);
             }
 
         $product = Product::find($id);
@@ -118,11 +135,19 @@ class ProductController extends Controller
     public function destroy($id){
 
         if(! Product::find($id)){
-            return response()->json(["message" => "Product does not exist"],400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'El producto no existe',
+                'code' => 400
+            ]);
         }
 
         Product::find($id)->delete();
-        return response()->json(["message" => "product successfully disposed"]);
+        return response()->json([
+            'status' => 0,
+            'message' => 'El producto fue eliminado correctamente',
+            'code' => 200
+        ]);
 
     }
 }

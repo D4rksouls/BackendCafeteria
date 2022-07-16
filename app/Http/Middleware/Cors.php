@@ -16,7 +16,7 @@ class Cors
      */
     public function handle(Request $request, Closure $next){
 
-        $request->header('Access-Control-Allow-Origin', 'https://cafeteriakonecta.herokuapp.com/');
+        $request->header('Access-Control-Allow-Origin', 'http://localhost:8000');
         $request->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
         $request->header('Access-Control-Allow-Headers', 'X-Requested-With','Content-Type,
         Authorization');

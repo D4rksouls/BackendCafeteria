@@ -40,7 +40,11 @@ class UserController extends Controller
 
         User::destroy($id);
 
-        return response()->json(['status' => 'User successfully removed']);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Usuario eliminado exitosamente',
+            'code' => 200
+        ]);
     }
 
 
@@ -55,7 +59,11 @@ class UserController extends Controller
 
             if($validator->fails()){
 
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Datos no validos para la actualizacion',
+                'code' => 400
+            ]);
 
             }
         $user = Auth::user();
@@ -86,7 +94,11 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['status' => 'User successfully updated']);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Usuario actualizado correctamente',
+            'code' => 200
+        ]);
 
     }
     /**

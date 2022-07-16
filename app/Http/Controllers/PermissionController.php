@@ -37,12 +37,20 @@ class PermissionController extends Controller
 
             $user->syncRoles(['custumer']);
         }else{
-            return response()->json(["message" => "Invalid value entered"],400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Rol ingresado Invalido',
+                'code' => 400
+            ]);
         }
 
         $user->save();
         $role = $user->getRoleNames();
-        return response()->json(compact('user','role'), 201);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Rol actualizado exitosamente',
+            'code' => 200
+        ]);
 
     }
 }

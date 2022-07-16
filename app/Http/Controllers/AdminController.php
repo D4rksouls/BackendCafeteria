@@ -20,12 +20,20 @@ class AdminController extends Controller
 
     public function deleteAdmin($id){
         if(! User::find($id)){
-            return response()->json(["message" => "User does not exist"],400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Usuario No existe',
+                'code' => 400
+            ]);
         }
 
         User::destroy($id);
 
-        return response()->json(['status' => 'User successfully removed']);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Usuario Eliminado Correctamente',
+            'code' => 201
+        ]);
     }
 
     public function updateAdmin($id,Request $request){
@@ -38,12 +46,20 @@ class AdminController extends Controller
 
             if($validator->fails()){
 
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Los datos ingresados no son validos',
+                'code' => 201
+            ]);
 
             }
 
             if(! User::find($id)){
-                return response()->json(["message" => "User does not exist"],400);
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'Usuario No existe',
+                    'code' => 400
+                ]);
             }
 
         $user = User::find($id);
@@ -74,8 +90,11 @@ class AdminController extends Controller
 
         $user->save();
 
-        return response()->json(['status' => 'User successfully updated']);
-
+        return response()->json([
+            'status' => 1,
+            'message' => 'Usuario actualizado correctamente',
+            'code' => 201
+        ]);
     }
 
 

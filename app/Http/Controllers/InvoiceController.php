@@ -35,7 +35,11 @@ class InvoiceController extends Controller
                 'all_value' => '',
             ]);
 
-        return response()->json(["status"=>"invoice created correctly"],201);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Factura creada correctamente',
+            'code' => 201
+        ]);
     }
 /**
  * Le resta el stock que el cliente se llevo dentro de la base de datos y
@@ -44,28 +48,40 @@ class InvoiceController extends Controller
  */
     public function Buy(){
         $id = Auth::id();
-        $invoices = DB::select('select max(id) AS id from invoices where id_client = :id limit 1', ['id' => $id]);
+        $invoiceid = DB::table('invoices')
+                    ->where('id_client','=',$id)
+                    ->max('id');
 
-        foreach($invoices as $invoice){
-            $invoiceid= $invoice->id;
-        }
+        $contents =  DB::table('contents')
+                        ->select('id_product', 'stock')
+                        ->where('id_invoice','=',$invoiceid)
+                        ->get();
 
-        $contents = DB::select('select id_product, stock  from contents where id_invoice = :id', ['id' => $invoiceid]);
-        $values = DB::select('select sum(value) as allvalue  from contents where id_invoice = :id', ['id' => $invoiceid]);
+
+        $value = DB::table('contents')
+                        ->where('id_invoice','=',$invoiceid)
+                        ->sum('value');
+
 
         foreach($contents as $content){
             $product = Product::find($content->id_product);
             $product->stock = $product->stock - $content->stock;
             $product->save();
+
+            var_dump($product->stock);
         }
 
-
-        foreach($values as $value){
             $invoices = Invoice::find($invoiceid);
-            $invoices->all_value = $value->allvalue;
+            $invoices->all_value = $value;
             $invoices->save();
-        }
-        return response()->json(["message" => "Congratulations on your purchase"]);
+
+            var_dump($invoices->all_value);
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Felicidades por su compra',
+            'code' => 200
+        ]);
     }
 
 
