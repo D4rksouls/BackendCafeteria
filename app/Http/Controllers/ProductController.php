@@ -77,7 +77,12 @@ class ProductController extends Controller
 
             }
 
-        $product = Product::create($request->all());
+        $product = Product::create([
+            'name_product' => $request->get('name_product'),
+            'stock' => $request->get('stock'),
+            'value' => $request->get('value'),
+            'selectstock' => 1
+        ]);
 
         return response()->json($product, 201);
     }
@@ -94,10 +99,9 @@ class ProductController extends Controller
     public function update(Request $request, $id){
 
         $validator = Validator::make($request->all(), [
-            'name_product'=> 'nullable|string|max:255',
-            'stock' => 'nullable|integer',
-            'value' => 'nullable|numeric',
-
+            'name_product'=> 'required|string|max:255',
+            'stock' => 'required|integer',
+            'value' => 'required|numeric',
         ]);
 
             if($validator->fails()){
@@ -119,8 +123,17 @@ class ProductController extends Controller
             }
 
         $product = Product::find($id);
-        $product->update($request->all());
-        return response()->json($product, 200);
+        $product->update([
+            'name_product' => $request->get('name_product'),
+            'stock' => $request->get('stock'),
+            'value' => $request->get('value'),
+            'selectstock' => 1
+        ]);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Producto actualizado correctamente',
+            'code' => 200
+        ]);
 
     }
 

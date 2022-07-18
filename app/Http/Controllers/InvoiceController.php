@@ -33,6 +33,7 @@ class InvoiceController extends Controller
             $invoices = Invoice::create([
                 'id_client' => $id,
                 'all_value' => '',
+
             ]);
 
         return response()->json([

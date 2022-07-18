@@ -34,7 +34,7 @@ Route::group(['middleware' => ['cors']], function(){
         Route::post('profile/update', [UserController::class,'update'])->name('updateUser');
         Route::post('profile/delete', [UserController::class,'delete'])->name('deleteMyUser');
 
-        Route::post('users/update/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
+        Route::post('users/role/{id}',[PermissionController::class, 'updaterole'])->name('updateRole');
 
         Route::post('users/update/{id}', [AdminController::class,'updateAdmin'])->name('updateAdminUser');
         Route::post('users/delete/{id}', [AdminController::class,'deleteAdmin'])->name('deleteAdminUser');
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['cors']], function(){
 
         Route::post('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
         Route::post('products/create', [ProductController::class, 'create'])->name('createProduct');
-        Route::post('products/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
+        Route::post('products/delete/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
         Route::post('products/{id}', [ProductController::class, 'show'])->name('searchOneProduct');
         Route::post('products', [ProductController::class, 'index'])->name('showAllProducts');
 

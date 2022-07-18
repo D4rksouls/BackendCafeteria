@@ -23,9 +23,13 @@ class ContentController extends Controller{
      * Añade los productos al carrito
      *
      */
-    public function Add($productid, Request $request){
+    public function Add(Request $request){
         $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'name_product' => 'required|string',
             'stock' => 'required|integer',
+            'value' =>'required|float',
+            'selectstock' => 'required|integer',
         ]);
             if($validator->fails()){
                  return response()->json([
@@ -41,7 +45,7 @@ class ContentController extends Controller{
                     ->where('id_client','=',$id)
                     ->max('id');
 
-            if(!Product::find($productid)){
+            if(!Product::find($request->get('id'))){
                 return response()->json([
                     'status' => 0,
                     'message' => 'Producto no existe',
@@ -49,7 +53,7 @@ class ContentController extends Controller{
                 ]);
             }
 
-        $valueUnit = Product::find($productid)->value;
+
 
 
             if($request->get('stock') > Product::find($productid)->stock){
@@ -60,13 +64,13 @@ class ContentController extends Controller{
                 ]);
             }
 
-        $value = $valueUnit * $request->get('stock');
+        $value = $request->get('value') * $request->get('selectstock');
 
 
         $contents = Content::create([
             'id_invoice' => $invoices,
             'id_product' => $productid,
-            'stock' => $request->get('stock'),
+            'stock' => $request->get('selectstock'),
             'value' => $value,
         ]);
 
