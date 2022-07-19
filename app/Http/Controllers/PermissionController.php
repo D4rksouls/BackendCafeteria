@@ -14,10 +14,12 @@ class PermissionController extends Controller
         $this->middleware('can:updateRole')->only('roleUpdate');
     }
     /**
+     * @header jwt Token
+     * @param  Request  $request (rol = 'rol para actualizar')
+     *
      * Actualizacion del rol de usuario
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response json(status, message, code)
      */
     public function updaterole(Request $request, $id){
 

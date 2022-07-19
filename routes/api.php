@@ -42,12 +42,8 @@ Route::group(['middleware' => ['cors']], function(){
         Route::post('users', [UserController::class, 'index'])->name('showAllUser');
 
         Route::post('store',[ProductController::class, 'index'])->name('showAllProductsStore');
-        Route::post('store/invoice',[InvoiceController::class, 'Factura'])->name('createInvoices');
         Route::post('store/buy',[InvoiceController::class, 'Buy'])->name('buyInvoices');
 
-
-        Route::post('store/{productid}',[ContentController::class, 'Add'])->name('addContent');
-        Route::post('store/delete/{id}',[ContentController::class, 'destroy'])->name('destroyContent');
 
         Route::post('products/update/{id}', [ProductController::class, 'update'])->name('updateProduct');
         Route::post('products/create', [ProductController::class, 'create'])->name('createProduct');

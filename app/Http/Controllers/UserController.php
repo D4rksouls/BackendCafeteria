@@ -24,7 +24,13 @@ class UserController extends Controller
     }
 
 
-
+    /**
+     * @header jwt token
+     *
+     * Devuelve el usuario que esta logeado
+     *
+     * return json(user)
+    */
     public function getUser(){
 
 
@@ -34,7 +40,13 @@ class UserController extends Controller
 
     }
 
-
+    /**
+     * @header jwt token
+     *
+     * Elimina el usuario que esta logeado
+     *
+     * @return void
+     */
     public function delete(){
         $id = Auth::id();
 
@@ -48,7 +60,14 @@ class UserController extends Controller
     }
 
 
-
+    /**
+     * @header jwt Token
+     * @param Request $request
+     *
+     * Actualizacion de usuario logeado
+     *
+     * @return Response json(status, message, code)
+     */
     public function update(Request $request){
         $validator = Validator::make($request->all(), [
             'document'=> 'nullable|integer|digits_between:6,10',
@@ -102,9 +121,11 @@ class UserController extends Controller
 
     }
     /**
+    * @header jwt Token
+    *
     * Muestra todos los Usuarios
     *
-    * @return \Illuminate\Http\Response
+    * @return Users<array>
     */
     public function index(){
 

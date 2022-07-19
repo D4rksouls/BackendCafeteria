@@ -24,7 +24,7 @@ class SessionController extends Controller
     *        Si se logra autentificar nos devuelte el token
     *        Si no, devuelve el estatus
     *
-    * @return Response  json(token) o status
+    * @return Response  token, status, message, code.
     */
     public function login(Request $request){
 
@@ -49,9 +49,12 @@ class SessionController extends Controller
 
                 }
                 $token = JWTAuth::attempt($credentials);
+                $user = User::find(Auth::id());
+                $rol = $user->getRoleNames();
 
             return response()->json([
                 'data' => $token,
+                'rol' => $rol,
                 'status' => 1,
                 'message' => 'Inicio de sesion exitoso',
                 'code' => 200
@@ -60,12 +63,12 @@ class SessionController extends Controller
 
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * Process     @param $validator =Validator::make($request->all()  Valida que los datos recibidos si cumplan  // si la validacion falla devuelve un 400
-     * Process     @param $user = User::create  Crea el Usuario y encripta la Password con el Hash
-     * Process     @param $token = JWTAuth::fromUser($user); Obtenemos el token correspondiente a ese usuario creado
+     * @param  \Illuminate\Http\Request  $request (document, name, email, password, password_confirmation)
+     * Process      $validator =Validator::make($request->all()  Valida que los datos recibidos si cumplan  // si la validacion falla devuelve un 400
+     * Process      $user = User::create  Crea el Usuario y encripta la Password con el Hash
+
      *
-     * @return Response json(compact('user','token'),201)
+     * @return Response json(statu, message, code)
      */
 
     public function register(Request $request){
@@ -105,26 +108,28 @@ class SessionController extends Controller
 
 
     /**
+     * @header  token
+     *
      * Invalida el token JWT del usuario para finalizar la sesion
      * En el caso de que salga error se le indica al usuario try again
      *
-     * @return response ->json();
+     * @return response json(status,message,code)
      */
     public function logout(){
 
         try {
             JWTAuth::invalidate(JWTAuth::getToken());
             return response()->json([
-              'status' => 'success',
-              'message' => 'You have successfully logged out.',
-              'code' => 200
+                'status' => 1,
+                'message' => 'Cierre de session exitoso',
+                'code' => 200
             ]);
         } catch (JWTException $e) {
               JWTAuth::unsetToken();
 
                 return response()->json([
-                    'status' => 'error',
-                    'message' => 'Failed to logout, please try again.',
+                    'status' => 0,
+                    'message' => 'Ocurrio un error, vuelve a intentar',
                     'code' => 500
                 ]);
             }

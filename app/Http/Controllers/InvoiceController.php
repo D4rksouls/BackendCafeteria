@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Content;
 use App\Models\Product;
 
 
@@ -16,65 +14,28 @@ class InvoiceController extends Controller
 {
     public function __construct(){
 
-        $this->middleware('can:createInvoices')->only('Factura');
         $this->middleware('can:buyInvoices')->only('Buy');
 
     }
+
 /**
+ * @header jwt Token
+ * @param  $request (trae un array de productos comprados)
+ * Le resta el stock que el cliente se llevo dentro de la base de datos
  *
- * Crea la factura para poder añadir los productos
- *
- *
+ * return response json(status,message,code)
  */
-    public function Factura(){
+    public function Buy(Request $request){
 
-        $id = Auth::id();
-
-            $invoices = Invoice::create([
-                'id_client' => $id,
-                'all_value' => '',
-
-            ]);
-
-        return response()->json([
-            'status' => 1,
-            'message' => 'Factura creada correctamente',
-            'code' => 201
-        ]);
-    }
-/**
- * Le resta el stock que el cliente se llevo dentro de la base de datos y
- * actualiza el valor total de la factura
- *
- */
-    public function Buy(){
-        $id = Auth::id();
-        $invoiceid = DB::table('invoices')
-                    ->where('id_client','=',$id)
-                    ->max('id');
-
-        $contents =  DB::table('contents')
-                        ->select('id_product', 'stock')
-                        ->where('id_invoice','=',$invoiceid)
-                        ->get();
+            $contents = $request->all();
 
 
-        $value = DB::table('contents')
-                        ->where('id_invoice','=',$invoiceid)
-                        ->sum('value');
-
-
-        foreach($contents as $content){
-            $product = Product::find($content->id_product);
-            $product->stock = $product->stock - $content->stock;
-            $product->save();
-
-
-        }
-
-            $invoices = Invoice::find($invoiceid);
-            $invoices->all_value = $value;
-            $invoices->save();
+            for($i=0 ; $i < sizeof($contents); $i++){
+                $content = $contents[$i];
+                $product = Product::find($content['id']);
+                $product->stock = $product->stock - $content['selectstock'];
+                $product->save();
+            };
 
 
 

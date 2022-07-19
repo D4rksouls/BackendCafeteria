@@ -19,9 +19,11 @@ class ProductController extends Controller
         $this->middleware('can:showAllProductsStore')->only('index');
     }
     /**
+     * @header jwt Token
+     *
      * Muestra todos los productos
      *
-     * @return \Illuminate\Http\Response
+     * @return Response Products<array>
      */
     public function index(){
 
@@ -32,10 +34,12 @@ class ProductController extends Controller
 
 
     /**
+     * @header jwt Token
+     * @param  int  $id
+     *
      * Mostrar el producto especificado.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response producto buscado
      */
     public function show($id){
 
@@ -54,10 +58,12 @@ class ProductController extends Controller
 
 
     /**
+     * @header jwt Token
+     * @param  \Illuminate\Http\Request  $request
+     *
      * Almacenar un producto recién.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response  json(@param $product, @status: 201)
+     * @return \Illuminate\Http\Response  json(status, message, code)
      */
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
@@ -84,17 +90,23 @@ class ProductController extends Controller
             'selectstock' => 1
         ]);
 
-        return response()->json($product, 201);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Producto Creado exitosamente',
+            'code' => 201
+        ]);
     }
 
 
 
     /**
-     * Actualizar el recurso especificado en el almacén.
-     *
+     * @header jwt Token
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response  json(@param $product, @status: 200)
+     *
+     * Actualizar el recurso especificado en el almacén  segun el id del producto.
+     *
+     * @return Response  json(status, message, code)
      */
     public function update(Request $request, $id){
 
@@ -140,10 +152,12 @@ class ProductController extends Controller
 
 
     /**
-     * Eliminar el recurso especificado del almacenamiento.
-     *
+     * @header jwt Token
      * @param  int  $id
-     * @return \Illuminate\Http\Response    json(@param $product = null, @status: 204)
+     *
+     * Eliminar el recurso especificado del almacenamiento segun el id.
+     *
+     * @return Response   json(status, message, code)
      */
     public function destroy($id){
 
@@ -157,7 +171,7 @@ class ProductController extends Controller
 
         Product::find($id)->delete();
         return response()->json([
-            'status' => 0,
+            'status' => 1,
             'message' => 'El producto fue eliminado correctamente',
             'code' => 200
         ]);
